@@ -7,37 +7,23 @@ import {
   stepNumberSelector,
   xIsNextSelector,
   ascendingSelector,
+  winnerSelector,
   setSort,
   selectHistory,
-  selectSquare,
 } from './gameSlice';
-import calculateWinner from 'services/calculateWinner';
 
 export default function Game() {
+  const dispatch = useDispatch();
+
   const history = useSelector(historySelector);
   const stepNumber = useSelector(stepNumberSelector);
   const xIsNext = useSelector(xIsNextSelector);
   const ascending = useSelector(ascendingSelector);
-
-  const dispatch = useDispatch();
+  const winner = useSelector(winnerSelector);
 
   const currentHistory = history.slice(0, stepNumber + 1);
-
   const currentBoard = currentHistory[stepNumber];
   const squares = currentBoard.squares.slice();
-  const winner = calculateWinner(currentBoard.squares);
-
-  const handleClick = (i: number) => {
-    // If there's a winner or if there's an X or O in the square, do nothing
-    if (winner || squares[i]) {
-      return;
-    }
-    squares[i] = xIsNext ? 'X' : 'O';
-    const col = i % 3;
-    const row = Math.floor(i / 3);
-    const lastSquare = [col, row];
-    dispatch(selectSquare({ squares, lastSquare, currentHistory }));
-  };
 
   const moves = history.map((step, move) => {
     const currentStepClass = move === stepNumber ? 'current' : '';
@@ -63,7 +49,7 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board winningCells={winner ? winner.cells : []} squares={currentBoard.squares} onClick={handleClick} />
+        <Board />
       </div>
 
       <div className="game-info">

@@ -1,6 +1,7 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 
 import { RootState } from 'store';
+import calculateWinner from 'services/calculateWinner';
 
 type historyType = {
   squares: Array<string>;
@@ -31,13 +32,7 @@ const gameSlice = createSlice({
   reducers: {
     selectSquare(state, action) {
       const { squares, lastSquare, currentHistory } = action.payload;
-      state.history = [
-        ...currentHistory,
-        {
-          squares,
-          lastSquare,
-        },
-      ];
+      state.history = currentHistory.concat([{ squares, lastSquare }]);
       state.stepNumber = currentHistory.length;
       state.xIsNext = !state.xIsNext;
     },
@@ -64,3 +59,8 @@ export const historySelector = createSelector(gameStateSelector, (game) => game.
 export const stepNumberSelector = createSelector(gameStateSelector, (game) => game.stepNumber);
 export const xIsNextSelector = createSelector(gameStateSelector, (game) => game.xIsNext);
 export const ascendingSelector = createSelector(gameStateSelector, (game) => game.ascending);
+export const winnerSelector = createSelector(historySelector, stepNumberSelector, (history, stepNumber) => {
+  const { squares } = history[stepNumber];
+  const winner = calculateWinner(squares);
+  return winner;
+});
