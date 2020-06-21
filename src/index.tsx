@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import './index.css';
-import App from './App';
+// import App from './App';
+import Game from 'components/Game';
 import * as serviceWorker from './serviceWorker';
+
+const game = <Game />
+console.log("GAME", typeof game);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Game />
   </React.StrictMode>,
   document.getElementById('root')
 );
