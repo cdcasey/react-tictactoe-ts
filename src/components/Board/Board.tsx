@@ -1,12 +1,16 @@
 import React from 'react';
 
 export default function Board() {
+  const handleClick = () => {
+    return 'X';
+  };
+
   const renderSquare = (i: Number) => (
     <button
       type="button"
       className="square"
       //   className={props.winningCells.includes(i) ? 'square winner' : 'square'}
-      //   onClick={() => props.onClick(i)}
+      onClick={handleClick}
     >
       {i}
     </button>

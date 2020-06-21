@@ -1,3 +1,4 @@
 import Game from './Game';
+import gameReducer from './gameSlice';
 
-export { Game };
+export { Game, gameReducer };

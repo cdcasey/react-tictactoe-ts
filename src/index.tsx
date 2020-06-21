@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
+import store from './store';
 import './index.css';
 import { Game } from 'components/Game';
 import * as serviceWorker from './serviceWorker';
@@ -9,10 +11,12 @@ const game = <Game />;
 console.log('GAME', typeof game);
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Game />
-    </React.StrictMode>,
-    document.getElementById('root'),
+  <React.StrictMode>
+    <Provider store={store}>
+      <Game />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change
