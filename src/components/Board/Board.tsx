@@ -1,21 +1,33 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
-import {
-  historySelector,
-  stepNumberSelector,
-  xIsNextSelector,
-  winnerSelector,
-  selectSquare,
-} from 'components/Game/gameSlice';
+import { historyType } from 'components/Game/gameSlice';
+import { winnerObject } from 'services/calculateWinner';
 
-export default function Board() {
-  const dispatch = useDispatch();
+// import {
+//   historySelector,
+//   stepNumberSelector,
+//   xIsNextSelector,
+//   winnerSelector,
+//   selectSquare,
+// } from 'components/Game/gameSlice';
 
-  const history = useSelector(historySelector);
-  const stepNumber = useSelector(stepNumberSelector);
-  const xIsNext = useSelector(xIsNextSelector);
-  const winner = useSelector(winnerSelector);
+type boardProps = {
+  history: historyType[];
+  stepNumber: number;
+  xIsNext: boolean;
+  winner: winnerObject | null;
+  selectSquare: (arg: object) => void;
+};
+
+export default function Board({ history, stepNumber, xIsNext, winner, selectSquare }: boardProps) {
+  // const dispatch = useDispatch();
+
+  // const history = useSelector(historySelector);
+  // const stepNumber = useSelector(stepNumberSelector);
+  // const xIsNext = useSelector(xIsNextSelector);
+  // const winner = useSelector(winnerSelector);
 
   const currentHistory = history.slice(0, stepNumber + 1);
   const currentBoard = currentHistory[stepNumber];
@@ -30,7 +42,8 @@ export default function Board() {
     const col = i % 3;
     const row = Math.floor(i / 3);
     const lastSquare = [col, row];
-    dispatch(selectSquare({ squares, lastSquare, currentHistory }));
+    // dispatch(selectSquare({ squares, lastSquare, currentHistory }));
+    selectSquare({ squares, lastSquare, currentHistory });
   };
 
   const renderSquare = (i: number): React.ReactNode => {

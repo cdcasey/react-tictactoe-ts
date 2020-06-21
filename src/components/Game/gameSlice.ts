@@ -3,7 +3,7 @@ import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'store';
 import calculateWinner from 'services/calculateWinner';
 
-type historyType = {
+export type historyType = {
   squares: Array<string>;
   lastSquare: Array<number>;
 };

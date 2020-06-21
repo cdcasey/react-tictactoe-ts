@@ -1,4 +1,4 @@
-type winnerObject = {
+export type winnerObject = {
   letter: string;
   cells: Array<number>;
 };
