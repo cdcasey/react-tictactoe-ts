@@ -1,18 +1,15 @@
 import React from 'react';
 
-export default function Board() {
-  const handleClick = () => {
-    return 'X';
-  };
+type props = {
+  winningCells: Array<number>;
+  squares: string[];
+  onClick: (i: number) => void;
+};
 
-  const renderSquare = (i: Number) => (
-    <button
-      type="button"
-      className="square"
-      //   className={props.winningCells.includes(i) ? 'square winner' : 'square'}
-      onClick={handleClick}
-    >
-      {i}
+export default function Board({ winningCells, squares, onClick }: props) {
+  const renderSquare = (i: number) => (
+    <button type="button" className={winningCells.includes(i) ? 'square winner' : 'square'} onClick={() => onClick(i)}>
+      {squares[i]}
     </button>
   );
 

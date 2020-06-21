@@ -7,9 +7,6 @@ import './index.css';
 import { Game } from 'components/Game';
 import * as serviceWorker from './serviceWorker';
 
-const game = <Game />;
-console.log('GAME', typeof game);
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

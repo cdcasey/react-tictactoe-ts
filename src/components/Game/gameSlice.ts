@@ -1,14 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 
 import { RootState } from 'store';
 
+type historyType = {
+  squares: Array<string>;
+  lastSquare: Array<number>;
+};
 type gameSliceState = {
-  history: [
-    {
-      squares: Array<string>;
-      lastSquare: [];
-    },
-  ];
+  history: historyType[];
   stepNumber: number;
   xIsNext: boolean;
   ascending: boolean;
@@ -29,11 +28,39 @@ const initialState: gameSliceState = {
 const gameSlice = createSlice({
   name: 'game',
   initialState,
-  reducers: {},
+  reducers: {
+    selectSquare(state, action) {
+      const { squares, lastSquare, currentHistory } = action.payload;
+      state.history = [
+        ...currentHistory,
+        {
+          squares,
+          lastSquare,
+        },
+      ];
+      state.stepNumber = currentHistory.length;
+      state.xIsNext = !state.xIsNext;
+    },
+    selectHistory(state, action) {
+      const step = action.payload;
+      const xIsNext = step % 2 === 0;
+      state.stepNumber = step;
+      state.xIsNext = xIsNext;
+    },
+    setSort(state) {
+      state.ascending = !state.ascending;
+    },
+  },
 });
 
+export const { selectSquare, selectHistory, setSort } = gameSlice.actions;
 export default gameSlice.reducer;
 
 export const gameStateSelector = (state: RootState): gameSliceState => {
   return state.game;
 };
+
+export const historySelector = createSelector(gameStateSelector, (game) => game.history);
+export const stepNumberSelector = createSelector(gameStateSelector, (game) => game.stepNumber);
+export const xIsNextSelector = createSelector(gameStateSelector, (game) => game.xIsNext);
+export const ascendingSelector = createSelector(gameStateSelector, (game) => game.ascending);
