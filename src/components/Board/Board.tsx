@@ -2,7 +2,7 @@ import React from 'react';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 
-import { historyType } from 'components/Game/gameSlice';
+import { historyType, selectSquareActionType } from 'components/Game/gameSlice';
 import { winnerObject } from 'services/calculateWinner';
 
 // import {
@@ -18,7 +18,7 @@ type boardProps = {
   stepNumber: number;
   xIsNext: boolean;
   winner: winnerObject | null;
-  selectSquare: (arg: object) => void;
+  selectSquare: (arg: selectSquareActionType) => void;
 };
 
 export default function Board({ history, stepNumber, xIsNext, winner, selectSquare }: boardProps) {
