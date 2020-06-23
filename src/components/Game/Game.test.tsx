@@ -8,7 +8,7 @@ import gameReducer, { initialState as gameInitialState } from './gameSlice';
 import store from 'store';
 
 function renderWithRedux(
-  ui,
+  ui: any,
   {
     initialState = gameInitialState,
     store = configureStore({
@@ -19,7 +19,7 @@ function renderWithRedux(
     ...renderOptions
   } = {},
 ) {
-  function Wrapper({ children }) {
+  function Wrapper({ children }: any) {
     return <Provider store={store}>{children}</Provider>;
   }
   return render(ui, { wrapper: Wrapper, ...renderOptions });
